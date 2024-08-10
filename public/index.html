@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
         body {
             font-family: Arial, sans-serif;
         }
+
         #dropZone {
             width: 100%;
             max-width: 600px;
@@ -23,23 +25,37 @@
             color: #999;
             font-size: 18px;
         }
+
         #dropZone.dragover {
             border-color: #333;
             color: #333;
         }
+
         pre {
             white-space: pre-wrap;
             word-wrap: break-word;
         }
     </style>
 </head>
+
 <body>
     <h1 style="text-align: center;">File Analyzer</h1>
     <div id="dropZone">Trascina qui un file o clicca per selezionare</div>
+
+    <div style="width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <h2>O inserisci URL del file</h2>
+        <input type="text" id="url-input" placeholder="Inserisci URL del file" />
+        <br>
+        <button id="fetch-url-button">Carica File dal URL</button>
+    </div>
+
+
     <pre id="result"></pre>
 
     <script>
         const dropZone = document.getElementById('dropZone');
+        const urlInput = document.getElementById('url-input');
+        const fetchUrlButton = document.getElementById('fetch-url-button');
         const result = document.getElementById('result');
 
         dropZone.addEventListener('dragover', (event) => {
@@ -96,6 +112,24 @@
                 result.innerText = error.message;
             }
         }
+
+        // Gestione del clic sul pulsante per caricare il file da URL
+        fetchUrlButton.addEventListener('click', async () => {
+            const url = urlInput.value;
+            if (url) {
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        throw new Error('Errore nel caricamento del file dal URL');
+                    }
+                    const blob = await response.blob();
+                    await handleFileUpload(new File([blob], 'downloaded-file'));
+                } catch (error) {
+                    result.innerText = error.message;
+                }
+            }
+        });
     </script>
 </body>
+
 </html>
