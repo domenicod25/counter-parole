@@ -1,0 +1,44 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# TypeScript
+dist/
+*.tsbuildinfo
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Optional npm cache directory
+.npm/
+
+# dotenv environment variables file
+.env
+
+# IDE specific files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# MacOS specific files
+.DS_Store
+
+# Docker specific files
+docker-compose.yml
+docker-compose.override.yml
+Dockerfile
+.dockerignore
+
+# Temporary files
+*.swp
+*.temp
+*.tmp
+*.bak
+*.old
