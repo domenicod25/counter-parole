@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Analyzer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #dropZone {
+            width: 100%;
+            max-width: 600px;
+            height: 200px;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin: 50px auto;
+            padding: 20px;
+            color: #999;
+            font-size: 18px;
+        }
+        #dropZone.dragover {
+            border-color: #333;
+            color: #333;
+        }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">File Analyzer</h1>
+    <div id="dropZone">Trascina qui un file o clicca per selezionare</div>
+    <pre id="result"></pre>
+
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const result = document.getElementById('result');
+
+        dropZone.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', async (event) => {
+            event.preventDefault();
+            dropZone.classList.remove('dragover');
+
+            const file = event.dataTransfer.files[0];
+            if (file) {
+                await handleFileUpload(file);
+            }
+        });
+
+        dropZone.addEventListener('click', () => {
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = '*/*';
+            fileInput.addEventListener('change', async () => {
+                const file = fileInput.files[0];
+                if (file) {
+                    await handleFileUpload(file);
+                }
+            });
+            fileInput.click();
+        });
+
+        async function handleFileUpload(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            result.innerText = 'Caricamento in corso...';
+
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error('Errore nel caricamento del file');
+                }
+
+                const data = await response.json();
+                result.innerText = JSON.stringify(data, null, 2);
+            } catch (error) {
+                result.innerText = error.message;
+            }
+        }
+    </script>
+</body>
+</html>
