@@ -9,33 +9,39 @@ File Analyzer è un'applicazione Node.js che permette di caricare un file di tes
 
 ## Installazione
 
-1. Clona il repository:
+1. **Clona il repository:**
     ```bash
-    git clone https://github.com/tuo/repository.git
-    cd repository
+    git clone https://github.com/domenicod25/counter-parole.git
+    cd counter-parole
     ```
 
-2. Installa le dipendenze:
+2. **Installa le dipendenze:**
     ```bash
     npm install
     ```
 
-3. Compila il codice TypeScript:
+3. **Compila il codice TypeScript:**
     ```bash
-    npx tsc
+    npm run build
     ```
 
 ## Esecuzione
 
-1. Avvia il server:
+1. **Avvia il server:**
     ```bash
-    node dist/server.js
+    npm start
     ```
 
-2. Accedi all'applicazione tramite browser:
-    ```
-    Apri il browser e vai su http://localhost:3000
-    ```
+2. **Accedi all'applicazione tramite browser:**
+    Apri il browser e vai su [http://localhost:3000](http://localhost:3000)
+
+## Sviluppo
+
+Per eseguire il server in modalità di sviluppo, con ricaricamento automatico dei file TypeScript, utilizza:
+
+```bash
+npm run start:dev 
+```
 
 ## Utilizzo
 
